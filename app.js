@@ -14,6 +14,7 @@ app.set('views', './view')
 
 app.get('/', c_beranda.beranda)
 app.get('/auth/login', c_auth.hal_login)
+app.post('/auth/proses-login' , c_auth.proses_login)
 
 
 
