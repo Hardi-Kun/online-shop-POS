@@ -4,6 +4,7 @@ const port          = 4000
 
 const c_beranda     = require ('./controller/c_beranda')
 const c_auth        = require ('./controller/c_auth')
+const c_toko        = require ('./controller/c_toko')
 
 
 app.use( express.urlencoded({extended:false}))
@@ -16,7 +17,7 @@ app.get('/', c_beranda.beranda)
 app.get('/auth/login', c_auth.hal_login)
 app.post('/auth/proses-login' , c_auth.proses_login)
 
-app.get('/toko')
+app.get('/toko', c_toko.index)
 
 
 

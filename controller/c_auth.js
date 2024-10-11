@@ -1,4 +1,4 @@
-const bcrypt        = require ('bcrypt')
+const bcrypt        = require ('bcryptjs')
 const m_user        = require ('../model//m_user')
 
 module.exports = 
@@ -14,12 +14,13 @@ module.exports =
         // ambil inputan dari form login
         let form_email       = req.body.form_email
         let form_password    = req.body.form_password
-
+        // console.log(form_password)
         // cek email yg dinput, ada gak di db
         let email_exist = await m_user.cari_email (form_email)
         if (email_exist.length > 0) {
             // cek password
             let password_cocok = bcrypt.compareSync(form_password, email_exist[0].password)
+            // console.log(password_cocok)
             if (password_cocok) {
                 res.redirect('/toko')
             } else {
