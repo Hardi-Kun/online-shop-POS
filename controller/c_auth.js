@@ -3,7 +3,10 @@ const m_user       = require ('../model//m_user')
 module.exports = 
 {
     hal_login: (req,res) => {
-        res.render('v_auth/login')
+        let data = {
+            notifikasi: req.query.notif,
+        }
+        res.render('v_auth/login', data)
     },
 
     proses_login: async (req,res) => {
