@@ -1,4 +1,5 @@
-const m_user       = require ('../model//m_user')
+const bcrypt        = require ('bcrypt')
+const m_user        = require ('../model//m_user')
 
 module.exports = 
 {
@@ -18,7 +19,13 @@ module.exports =
         let email_exist = await m_user.cari_email (form_email)
         if (email_exist.length > 0) {
             // cek password
-            res.send('email ada')
+            let password_cocok = bcrypt.compareSync(form_password, email_exist[0].password)
+            if (password_cocok) {
+                res.redirect('/toko')
+            } else {
+                let pesan = 'Password Salah!'
+                res.redirect(`/auth/login?notif=${pesan}`)
+            }
         } else {
             // tendang ke halaman register
             let pesan = `Email belum terdaftar, silakan registrasi dahulu`
