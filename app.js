@@ -7,6 +7,7 @@ const session       = require ('express-session')
 const c_beranda     = require ('./controller/c_beranda')
 const c_auth        = require ('./controller/c_auth')
 const c_toko        = require ('./controller/c_toko')
+const c_olshop      = require ('./controller/c_olshop')
 const cek_login     = c_auth.cek_login 
 
 // settingan untuk data sessio  login
@@ -35,8 +36,7 @@ app.post('/auth/proses-login' , c_auth.proses_login)
 
 app.get('/toko', cek_login, c_toko.index)
 
-
-
+app.get('/olshop', c_olshop.hal_beranda)
 
 app.listen(port, ()=>{
     console.log(`Aplikasi sudah siap, buka http://localhost:${port}`)
