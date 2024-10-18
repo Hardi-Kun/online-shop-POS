@@ -37,6 +37,7 @@ app.post('/auth/proses-login' , c_auth.proses_login)
 app.get('/toko', cek_login, c_toko.index)
 
 app.get('/olshop', c_olshop.hal_beranda)
+app.get('/olshop/produk', c_olshop.hal_index_produk)
 
 app.listen(port, ()=>{
     console.log(`Aplikasi sudah siap, buka http://localhost:${port}`)
