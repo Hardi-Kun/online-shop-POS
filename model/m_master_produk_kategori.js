@@ -10,5 +10,6 @@ module.exports =
             `SELECT * FROM master_produk_kategori`
         )
         return eksekusi (sqlSyntax)
-    }
+    },
+
 }
