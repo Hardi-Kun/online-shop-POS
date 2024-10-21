@@ -12,9 +12,11 @@ module.exports =
         res.render('v_olshop/beranda', data)
     },
 
-    hal_index_produk: async (re,res) => {
+    hal_index_produk: async (req,res) => {
         let data = {
-            kategoriProduk: await m_master_produk_kategori.getSemua()
+            kategoriProduk  : await m_master_produk_kategori.getSemua(),
+            produkJual      : await m_master_produk.getSemua(),
+            notifikasi      : req.query.notif
         }
         res.render('v_olshop/produk/index', data)
     },
