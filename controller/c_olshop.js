@@ -84,11 +84,14 @@ module.exports =
         } catch (error) {
             throw error
         }
-    },
+    },  
 
     detail_produk: async (req,res) => {
+        let id = req.params.id_produk
         let data = {
-            kategoriProduk: await m_master_produk_kategori.getSemua()
+            kategoriProduk: await m_master_produk_kategori.getSemua(),
+            produkJual: await m_master_produk.getSatu( id ),
+            moment: moment,
         }
         res.render('v_olshop/produk/detail', data) 
     }
