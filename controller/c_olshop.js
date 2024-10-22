@@ -9,7 +9,9 @@ module.exports =
 
     hal_beranda: async (req,res) => {
         let data = {
-            kategoriProduk: await m_master_produk_kategori.getSemua()
+            kategoriProduk: await m_master_produk_kategori.getSemua(),
+            produkJual: await m_master_produk.getSemua(),
+            moment: moment,
         }
         res.render('v_olshop/beranda', data)
     },
