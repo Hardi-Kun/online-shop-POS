@@ -43,6 +43,7 @@ app.get('/olshop/produk', cek_login, c_olshop.hal_index_produk)
 app.get('/olshop/produk/tambah', cek_login, c_olshop.hal_form_tambah)
 app.post('/olshop/produk/proses-insert', cek_login, c_olshop.proses_insert_produk)
 app.get('/olshop/produk/detail/:id_produk', cek_login, c_olshop.detail_produk)
+app.get('/olshop/keranjang/input/:id_produk', cek_login, c_olshop.keranjang_input)
 
 app.listen(port, ()=>{
     console.log(`Aplikasi sudah siap, buka http://localhost:${port}`)

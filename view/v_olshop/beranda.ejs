@@ -1,12 +1,11 @@
 <%- include('../v_layout/head') %>
 <%- include('../v_layout/olshop-header') %>
   <main>
-
-    <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+          <div class="carousel-indicators">
+              <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
         <div class="carousel-inner bg-secondary" style="height: 366px;">
             <div class="carousel-item active">
@@ -28,12 +27,19 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
-  
+    
     <!-- Marketing messaging and featurettes
     ================================================== -->
     <!-- Wrap the rest of the page in another container to center all the content. -->
-  
+    
     <div class="container mb-5">
+        
+        <% if (typeof notifikasi !== 'undefined') { %>
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <%- notifikasi %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% } %>
   
         <div class="row">
             <% for (const i in produkJual) { %>
@@ -46,7 +52,12 @@
                 %>
                 <div class="col-lg-3 mb-4">
                     <div class="card">
-                        <img src="/upload/produk-foto/<%= produkJual[i].foto1 %>" class="card-img-top p-2 bg-light" style="height: 200px; object-fit: contain;" alt="...">
+                        <% if (produkJual[i].foto1) { %>
+                            <img src="/upload/produk-foto/<%= produkJual[i].foto1 %>" class="card-img-top p-2 bg-light" style="height: 200px; object-fit: contain;" alt="...">
+                            <% } else { %>
+                            <img src="/image/no-image.png" class="card-img-top p-2 bg-light" style="height: 200px; object-fit: contain;" alt="...">
+                        <% } %>
+                            
                         <div class="card-body">
                           <h5 class="card-title"><%= namaProdukTrim %></h5>
                             <div class="row mb-3">
@@ -62,7 +73,16 @@
                                     <a href="/olshop/produk/detail/<%= produkJual[i].id %>" class="btn btn-sm btn-outline-secondary text-capitalize mb-2">lihat produk</a>
                                 </div>
                                 <div class="col-6 text-end">
-                                    <a href="#" class="btn btn-sm btn-primary rounded-circle shadow-sm mb-2"><i class="fa-solid fa-cart-shopping"></i></a>
+                                    <%
+                                    let produkSudahAdaDiKeranjang = produkExist_diKeranjang.find(o => o.id_produk === produkJual[i].id);
+                                %>
+                                <% if (produkSudahAdaDiKeranjang) { %>
+                                    <button class="btn btn-sm btn-success rounded-circle">
+                                        <i class="fa-solid fa-check"></i>
+                                    </button>
+                                <% } else { %>
+                                        <a href="/olshop/keranjang/input/<%= produkJual[i].id %>" class="btn btn-sm btn-primary rounded-circle shadow-sm mb-2"><i class="fa-solid fa-cart-shopping"></i></a>
+                                <% } %>
                                 </div>
                             </div>
                         </div>
