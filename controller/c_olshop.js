@@ -11,6 +11,7 @@ module.exports =
     hal_beranda: async (req,res) => {
         let data = {
             kategoriProduk: await m_master_produk_kategori.getSemua(),
+            Produk_diKeranjang: await m_trans_keranjang.getJumlahProduk_diKeranjang(req),
             produkJual: await m_master_produk.getSemua(),
             moment: moment,
             notifikasi: req.query.notif,
@@ -23,6 +24,7 @@ module.exports =
     hal_index_produk: async (req,res) => {
         let data = {
             kategoriProduk  : await m_master_produk_kategori.getSemua(),
+            Produk_diKeranjang: await m_trans_keranjang.getJumlahProduk_diKeranjang(req),
             produkJual      : await m_master_produk.getSemua(),
             notifikasi      : req.query.notif
         }
@@ -31,7 +33,8 @@ module.exports =
 
     hal_form_tambah: async (req,res) => {
         let data = {
-            kategoriProduk: await m_master_produk_kategori.getSemua()
+            kategoriProduk: await m_master_produk_kategori.getSemua(),
+            Produk_diKeranjang: await m_trans_keranjang.getJumlahProduk_diKeranjang(req),
         }
         res.render('v_olshop/produk/form-tambah', data)
     },
@@ -54,13 +57,17 @@ module.exports =
         let folder3_simpan  = path.join(__dirname, '../public/upload/produk-foto', filename_foto3)
         let pesan_upload    = ''
 
-        foto1.mv(folder1_simpan, async function(err) {
-            if (err) {
-                pesan_upload += `<br>foto 1 gagal upload`
-            } else {
-                pesan_upload += `<br>foto 1 berhasil upload`
-            }
-        })
+        if (foto1) {
+            foto1.mv(folder1_simpan, async function(err) {
+                if (err) {  
+                    pesan_upload += `<br>foto 1 gagal upload`
+                } else {x``
+                    pesan_upload += `<br>foto 1 berhasil upload`
+                }
+            })
+        } else {
+            pesan_upload += `<br>Tidak ada foto`
+        }
 
         if (foto2) {
             foto2.mv(folder2_simpan, async function(err) {
@@ -96,6 +103,7 @@ module.exports =
         let id = req.params.id_produk
         let data = {
             kategoriProduk: await m_master_produk_kategori.getSemua(),
+            Produk_diKeranjang: await m_trans_keranjang.getJumlahProduk_diKeranjang(req),
             produkJual: await m_master_produk.getSatu( id ),
             moment: moment,
         }
@@ -112,5 +120,14 @@ module.exports =
             res.redirect(`/olshop?notif=${error.message}`)
         }
     },
+
+    keranjang_list: async (req,res) => {
+        let data = {
+            kategoriProduk: await m_master_produk_kategori.getSemua(),
+            Produk_diKeranjang: await m_trans_keranjang.getJumlahProduk_diKeranjang(req),
+            moment: moment,
+        }
+        res.render('v_olshop/keranjang/list', data)
+    }
 
 }
