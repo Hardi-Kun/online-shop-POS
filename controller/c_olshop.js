@@ -125,6 +125,7 @@ module.exports =
         let data = {
             kategoriProduk: await m_master_produk_kategori.getSemua(),
             Produk_diKeranjang: await m_trans_keranjang.getJumlahProduk_diKeranjang(req),
+            detailProduk_keranjang: await m_trans_keranjang.getDetailProduk_diKeranjang(req),
             moment: moment,
         }
         res.render('v_olshop/keranjang/list', data)
