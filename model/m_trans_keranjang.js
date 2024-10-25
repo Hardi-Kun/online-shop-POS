@@ -51,5 +51,13 @@ module.exports =
             [req.session.user[0].id]
         )
         return eksekusi (sqlSyntax)
-    }
+    },
+
+    hapus: function(req) {
+        let sqlSyntax = mysql.format(
+            `DELETE FROM trans_keranjang WHERE id = ?`,
+            [req.params.id_keranjang]
+        )
+        return eksekusi( sqlSyntax )
+    },
 }
