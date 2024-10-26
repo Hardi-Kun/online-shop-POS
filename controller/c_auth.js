@@ -49,4 +49,11 @@ module.exports =
         }
     },
 
+    form_daftar: (req,res) => {
+        let dataview = {
+            message: req.query.msg
+        }
+        res.render('v_auth/form-daftar', dataview)
+    }
+
 }
