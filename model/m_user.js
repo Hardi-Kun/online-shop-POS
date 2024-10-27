@@ -2,7 +2,6 @@ const mysql               = require ('mysql2')
 const config_database     = require ('../config/database')
 const db                  = config_database.db
 const eksekusi            = config_database.eksekusi
-const moment          = require('moment')
 
 module.exports = 
 {
@@ -14,14 +13,16 @@ module.exports =
         return eksekusi (sqlSyntax)
     },
 
-    insert_user: (req,res) => {
-        let data = {
-            email       : req.body.form_email,
-            password    : req.body.form_password,
+    user_register: (user) => {
+        let sqlData = {
+            email       : user.email,
+            password    : user.password
         }
         return eksekusi(mysql.format(   
             `INSERT INTO user SET ?`,
-            [data]
-        ));
+            [sqlData]
+        ))
     },
+
+    
 }

@@ -9,6 +9,7 @@ const c_beranda     = require ('./controller/c_beranda')
 const c_auth        = require ('./controller/c_auth')
 const c_toko        = require ('./controller/c_toko')
 const c_olshop      = require ('./controller/c_olshop')
+const c_profil = require('./controller/c_profil')
 const cek_login     = c_auth.cek_login 
 
 // settingan untuk data sessio  login
@@ -33,12 +34,14 @@ app.set('view engine', 'ejs')
 app.set('views', './view') 
 
 app.get('/auth/register', c_auth.form_daftar)
+app.post('/auth/proses-register', c_auth.proses_register)
 
 app.get('/', c_beranda.beranda)
 app.get('/auth/login', c_auth.hal_login)
 app.post('/auth/proses-login' , c_auth.proses_login)
 
 app.get('/toko', cek_login, c_toko.index)
+app.get('/profil', cek_login, c_profil.index)
 
 app.get('/olshop', cek_login, c_olshop.hal_beranda)
 app.get('/olshop/produk', cek_login, c_olshop.hal_index_produk)

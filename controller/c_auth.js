@@ -54,6 +54,42 @@ module.exports =
             message: req.query.msg
         }
         res.render('v_auth/form-daftar', dataview)
+    },
+
+    proses_register: async function(req, res) {
+        // Log the request body
+        console.log(req.body); // Make sure the data is coming through
+
+        // Get the form data
+        let { form_email, form_password } = req.body;
+
+        // Check if any field is undefined or null
+        if (!form_email || !form_password) {
+            res.redirect('/auth/register?notif=Semua harus diisi!!');
+            return;
+        }
+
+        // Hash the password
+        let hashedPassword = bcrypt.hashSync(form_password, 10);
+
+        // Create a user object
+        let user = {
+            email       : form_email,
+            password    : hashedPassword
+        }
+
+        try {
+            // Use insert_user method from m_user model
+            let insert = await m_user.user_register(user);
+            if (insert.affectedRows > 0) {
+                res.redirect('/auth/login');
+            } else {
+                res.redirect('/auth/login?notif=Tidak bisa menambahkan akun, coba lagi.');
+            }
+        } catch (error) {
+            console.error(error);
+            res.redirect('/auth/login?notif=Error, coba lagi.');
+        }
     }
 
 }

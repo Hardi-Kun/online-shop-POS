@@ -3,7 +3,7 @@
 <body class="d-flex align-items-center py-4 bg-body-tertiary text-bg-dark">
     <link rel="stylesheet" href="/custom/layout-login.css">
     <main class="form-signin w-100 m-auto">
-        <form method="post" action="/auth/proses-login" class="wrapper">
+        <form method="post" action="/auth/proses-register" class="wrapper">
           <img class="mb-4" src="/image/keranjangshop.png" alt="" height="57">
           <h7>SakuraShop</h7><br>
           <% if (typeof notifikasi !== 'undefined') { %>
@@ -22,6 +22,10 @@
             <input type="password" class="form-control" name="form_password" placeholder="Password">
             <label for="floatingPassword">Kata Sandi</label>
           </div>
+          <!-- <div class="form-floating">
+            <input type="text" class="form-control" name="form_namalengkap" placeholder="Nama Lengkap">
+            <label>Nama Lengkap</label>
+          </div> -->
       
           <button class="btn btn-primary w-100 py-2" type="submit">Daftar</button>
         </form>
