@@ -45,8 +45,12 @@
                             </a>
                         </li>
                         <li class="nav-item mx-1">
-                            <a href="/profil">
-                                <img src="/image/default_user.png" class="rounded-circle" height="35" width="35" style="object-fit: cover;" alt="...">   
+                            <a href="/profil">                                  
+                                <% if (!currentUser.foto) { %>
+                                    <img src="/image/default_user.png" class="rounded-circle" height="35" width="35" style="object-fit: cover;" alt="...">
+                                <% } else { %>
+                                    <img src="/upload/produk-foto/<%= currentUser.foto %>" class="rounded-circle" height="35" width="35" style="object-fit: cover;" alt="...">
+                                <% } %>
                             </a>
                         </li>
                     </ul>

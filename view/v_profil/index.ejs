@@ -4,27 +4,74 @@
 <body class="bg-body-secondary">
     <div class="container my-5">
         <h1 class="mb-4">Profil</h1>
+
+        <% if (typeof notifikasi !== 'undefined') { %>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <%= notifikasi %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% } %>
+            
         <div class="row">
             <div class="col-lg-8">
                 <div class="card border-0 mb-3">
                     <div class="row g-0">
-                        <h5 class="mt-3 mx-3">Biodata diri</h5>
-                        <div class="col-lg-3 mb-4">
-                            <div class="card">
-                                <img src="/image/default_user.png" class="img-fluid rounded-start mx-2" style="height: 200px; object-fit: contain;" alt="...">                                
-                                <div class="card-body">
-                                   
+                        <h5 class="my-3 mx-3">Biodata diri</h5>
+
+                        <div class="row">
+                            <!-- Card dengan Border untuk Foto Profil dan Tombol Edit Foto & Password -->
+                            <div class="col-lg-4 mb-4 mx-3">
+                                <div class="card border">
+                                    <div class="card-body d-flex flex-column align-items-center">
+
+                                        <% if (!currentUser.foto) { %>
+                                            <img src="/image/default_user.png" width="200" height="200"
+                                                style="object-fit: cover;" class="rounded-circle border p-1" alt="...">
+                                        <% } else { %>
+                                            <img src="/upload/produk-foto/<%= currentUser.foto %>" width="200" height="200"
+                                                style="object-fit: cover;" class="rounded-circle border p-1" alt="...">
+                                        <% } %>
+
+                                        <div class="card-body m-2">
+                                            <div class="card-title d-grid gap-2">
+                                                <a href="/profil/edit-foto" class="btn btn-block btn-secondary">Edit Foto</a>
+                                                <a href="/profil/form-edit-password" class="btn btn-block btn-secondary">Edit Password</a>
+                                            </div>
+                                        </div>  
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card Terpisah untuk Tombol Edit Bio -->
+                            <div class="col-lg-5 mb-4 mx-3">
+                                <div class="card border-0">
+                                    <div class="card-body m-2">
+                                        <div class="card-title d-grid gap-2">
+                                            <a href="/profil/edit-biodata" class="btn btn-secondary btn-sm w-100 ms-2 ">Edit Biodata Diri</a>
+                                        </div>
+                                        <p class="card-text">
+                                            <p>Nama         : <%= dataUser[0].nama_lengkap %></p>                                                                                                                                                   
+                                            <p>Email        : <%= dataUser[0].email %></p>                                                                                                                                                                                                                                                                                                                              
+                                        </p>
+                                        <p class="card-text">
+                                            <small class="text-body-secondary">
+                                                Last updated: 
+                                                <%=  moment(currentUser.last_update).startOf('minute').fromNow() %>
+                                                <%= moment(currentUser.last_update).format('(DD MMM YYYY HH:mm)') %>
+                                            </small>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 text-center p-4">
-                        </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
+
 
 <%- include('../v_layout/olshop-footer') %>
 <%- include('../v_layout/foot') %>
