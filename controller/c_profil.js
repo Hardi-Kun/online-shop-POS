@@ -11,13 +11,13 @@ module.exports =
 {
     index: async (req,res)  => {
         let dataview = {
+            req                 : req,
             moment              : moment,
             notifikasi          : req.query.notif,
             currentUser         : req.session.user ? req.session.user[0] : null,
             kategoriProduk      : await m_master_produk_kategori.getSemua(),
             Produk_diKeranjang  : await m_trans_keranjang.getJumlahProduk_diKeranjang(req),
             dataUser            : await m_user.getSemua(),
-            currentUser         : req.session.user ? req.session.user[0] : null,
         }
         res.render('v_profil/index', dataview)
 
@@ -104,6 +104,82 @@ module.exports =
             res.redirect('/profil/form-edit-password?notif=Ada yang eror!!')
         }
     
+    },
+
+    form_edit_nama: (req,res) => {
+        let dataview = {
+            req: req,
+        }
+        res.render('v_profil/form-edit-nama', dataview)
+    },
+
+    proses_update_nama: async (req,res) => {
+        console.log(req.body);
+
+        let { form_namalengkap } = req.body;
+
+        // Check if any field is undefined or null
+        if (!form_namalengkap) {
+            res.redirect('/profil/form-edit-nama?notif=Harus diisi!!');
+            return;
+        }
+        
+        let user = {
+            nama_lengkap:  form_namalengkap
+        }
+
+        try {
+            let update = await m_user.update_nama(req, user)
+            if (update && update.affectedRows > 0) {
+                // ubah data session yg lama
+                // req.session.user[0].password = hashedPassword
+                console.log('Nama update successful');
+                res.redirect('/profil?notif=Berhasil update nama')
+            } else {
+                console.log('Nama update failed: No rows affected');
+                res.redirect('/profil/form-edit-nama?notif=Gagal update nama')
+            }
+        } catch (error) {
+            console.error('Caught Error:', error);
+            res.redirect('/profil/form-edit-nama?notif=Ada yang eror!!')
+        }
+    },
+
+    form_edit_email: (req,res) => {
+        let dataview = {
+            req: req,
+        }
+        res.render('v_profil/form-edit-email', dataview)
+    },
+
+    proses_update_email: async (req,res) => {
+        console.log(req.body);
+
+        let { form_email } = req.body;
+
+        // Check if any field is undefined or null
+        if (!form_email) {
+            res.redirect('/profil/form-edit-email?notif=Harus diisi!!');
+            return;
+        }
+        
+        let user = {
+            email: form_email
+        }
+
+        try {
+            let update = await m_user.update_email(req, user)
+            if (update && update.affectedRows > 0) {
+                console.log('Email update successful');
+                res.redirect('/profil?notif=Berhasil update email')
+            } else {
+                console.log('Nama update failed: No rows affected');
+                res.redirect('/profil/form-edit-email?notif=Gagal update email')
+            }
+        } catch (error) {
+            console.error('Caught Error:', error);
+            res.redirect('/profil/form-edit-email?notif=Ada yang eror!!')
+        }
     },
 
 }

@@ -41,9 +41,14 @@ app.get('/auth/login', c_auth.hal_login)
 app.post('/auth/proses-login' , c_auth.proses_login)
 
 app.get('/toko', cek_login, c_toko.index)
+
 app.get('/profil', cek_login, c_profil.index)
 app.get('/profil/edit-foto', cek_login, c_profil.form_edit_foto)
 app.post('/profil/proses-update-foto', cek_login, c_profil.proses_update_foto)
+app.get('/profil/edit-nama', cek_login, c_profil.form_edit_nama)
+app.post('/profil/proses-edit-nama', cek_login, c_profil.proses_update_nama)   
+app.get('/profil/edit-email', cek_login, c_profil.form_edit_email)
+app.post('/profil/proses-edit-email', cek_login, c_profil.proses_update_email)   
 app.get('/profil/form-edit-password', cek_login, c_profil.form_edit_password )
 app.post('/profil/proses-edit-password', cek_login, c_profil.proses_update_password)
 

@@ -1,0 +1,28 @@
+<%- include('../v_layout/head') %>
+
+<body class="d-flex align-items-center py-4 bg-body-tertiary text-bg-dark">
+    <link rel="stylesheet" href="/custom/layout-login.css">
+    <main class="form-signin w-100 m-auto">
+        <form method="post" action="/profil/proses-edit-nama" class="wrapper">
+          <img class="mb-4" src="/image/keranjangshop.png" alt="" height="57">
+          <h7>SakuraShop</h7><br>
+          <% if (typeof notifikasi !== 'undefined') { %>
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                  <%= notifikasi %>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+          <% } %>
+          <h1 class="h3 mt-3 mb-3 fw-normal"><strong>Ubah Nama</strong></h1>
+      
+          <div class="form-floating mb-4">
+              <input type="text" class="form-control" name="form_namalengkap" placeholder="Nama Lengkap">
+              <label for="floatingInput">Nama lengkap</label>
+          </div>
+
+          <button class="btn btn-primary w-100 py-2" type="submit">Ubah</button>
+        </form>
+        <p class="mt-4 mb-3 text-body-secondary">&copy; 2024</p>
+    </main>
+</body>
+
+<%- include('../v_layout/foot') %>

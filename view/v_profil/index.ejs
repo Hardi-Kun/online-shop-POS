@@ -11,64 +11,70 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <% } %>
-            
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="card border-0 mb-3">
-                    <div class="row g-0">
-                        <h5 class="my-3 mx-3">Biodata diri</h5>
-
-                        <div class="row">
-                            <!-- Card dengan Border untuk Foto Profil dan Tombol Edit Foto & Password -->
-                            <div class="col-lg-4 mb-4 mx-3">
-                                <div class="card border">
-                                    <div class="card-body d-flex flex-column align-items-center">
-
-                                        <% if (!currentUser.foto) { %>
-                                            <img src="/image/default_user.png" width="200" height="200"
-                                                style="object-fit: cover;" class="rounded-circle border p-1" alt="...">
-                                        <% } else { %>
-                                            <img src="/upload/produk-foto/<%= currentUser.foto %>" width="200" height="200"
-                                                style="object-fit: cover;" class="rounded-circle border p-1" alt="...">
-                                        <% } %>
-
+      
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card border-0 mb-3">
+                        <div class="row g-0">
+                            <div>
+                                <h5 class="my-3 mx-3"><i class="fa-regular fa-user mx-2"></i><%= currentUser.nama_lengkap %></i></h5>                            
+                            </div>
+                            <div class="row">
+                                <!-- Card dengan Border untuk Foto Profil dan Tombol Edit Foto & Password -->
+                                <div class="col-lg-4 mb-4 mx-3">
+                                    <div class="card border">
+                                        <div class="card-body d-flex flex-column align-items-center">
+    
+                                            <% if (!currentUser.foto) { %>
+                                                <img src="/image/default_user.png" width="200" height="200"
+                                                    style="object-fit: cover;" class="rounded-circle border p-1" alt="...">
+                                            <% } else { %>
+                                                <img src="/upload/produk-foto/<%= currentUser.foto %>" width="200" height="200"
+                                                    style="object-fit: cover;" class="rounded-circle border p-1" alt="...">
+                                            <% } %>
+    
+                                            <div class="card-body m-2">
+                                                <div class="card-title d-grid gap-2">
+                                                    <a href="/profil/edit-foto" class="btn btn-block btn-secondary">Edit Foto</a>
+                                                    <a href="/profil/form-edit-password" class="btn btn-block btn-secondary">Edit Password</a>
+                                                </div>
+                                            </div>  
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <!-- Card Terpisah untuk Tombol Edit Bio -->
+                                <div class="col-lg-6 mb-4 mx-3">
+                                    <div class="card border-0">
                                         <div class="card-body m-2">
                                             <div class="card-title d-grid gap-2">
-                                                <a href="/profil/edit-foto" class="btn btn-block btn-secondary">Edit Foto</a>
-                                                <a href="/profil/form-edit-password" class="btn btn-block btn-secondary">Edit Password</a>
+                                               <span class="fs-5"><strong>Biodata Diri</strong></span>
                                             </div>
-                                        </div>  
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Card Terpisah untuk Tombol Edit Bio -->
-                            <div class="col-lg-5 mb-4 mx-3">
-                                <div class="card border-0">
-                                    <div class="card-body m-2">
-                                        <div class="card-title d-grid gap-2">
-                                            <a href="/profil/edit-biodata" class="btn btn-secondary btn-sm w-100 ms-2 ">Edit Biodata Diri</a>
+                                            <p class="card-text">
+                                                    <div class="mb-2">Nama : <%= currentUser.nama_lengkap %>
+                                                        <a href="/profil/edit-nama" class="mx-2">Ubah</a>
+                                                    </div> 
+                                                    <div class="mb-2">Email : <%= currentUser.email %>
+                                                        <a href="/profil/edit-email" class="mx-2">Ubah</a>
+                                                    </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                                            </p>
+                                            <p class="card-text">
+                                                <small class="text-body-secondary">
+                                                    Last updated: 
+                                                    <%= moment(currentUser.last_update).startOf('minute').fromNow() %>
+                                                    <%= moment(currentUser.last_update).format('(DD MMM YYYY HH:mm)') %>
+                                                </small>
+                                            </p>
                                         </div>
-                                        <p class="card-text">
-                                            <p>Nama         : <%= dataUser[0].nama_lengkap %></p>                                                                                                                                                   
-                                            <p>Email        : <%= dataUser[0].email %></p>                                                                                                                                                                                                                                                                                                                              
-                                        </p>
-                                        <p class="card-text">
-                                            <small class="text-body-secondary">
-                                                Last updated: 
-                                                <%=  moment(currentUser.last_update).startOf('minute').fromNow() %>
-                                                <%= moment(currentUser.last_update).format('(DD MMM YYYY HH:mm)') %>
-                                            </small>
-                                        </p>
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
-                        
                     </div>
                 </div>
-            </div>
-        </div>
+            </div>                                         
+            
     </div>
 </body>
 

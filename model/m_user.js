@@ -56,6 +56,32 @@ module.exports =
             `UPDATE user SET ? WHERE id = ?` , 
             [data, id_user]
         ))  
-    },      
+    },  
+    
+    update_nama: async function(req, user) { 
+        let sqlData = {
+            nama_lengkap: user.nama_lengkap     
+        }
+        let id_user = req.session.user?.[0]?.id
+
+        let sqlSyntax = mysql.format (
+            `UPDATE user SET ? WHERE id = ?`,
+            [sqlData, id_user]
+        )
+        return eksekusi (sqlSyntax)
+    },
+
+    update_email:  async (req, user) => { 
+        let sqlData = {
+            email: user.email    
+        }
+        let id_user = req.session.user?.[0]?.id
+
+        let sqlSyntax = mysql.format (
+            `UPDATE user SET ? WHERE id = ?`,
+            [sqlData, id_user]
+        )
+        return eksekusi (sqlSyntax)
+    }
 
 }
