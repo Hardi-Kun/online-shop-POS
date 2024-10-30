@@ -39,6 +39,7 @@ app.post('/auth/proses-register', c_auth.proses_register)
 app.get('/', c_beranda.beranda)
 app.get('/auth/login', c_auth.hal_login)
 app.post('/auth/proses-login' , c_auth.proses_login)
+app.post('/auth/logout', cek_login, c_auth.proses_logout)
 
 app.get('/toko', cek_login, c_toko.index)
 
