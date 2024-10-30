@@ -11,6 +11,7 @@ module.exports =
 
     hal_beranda: async (req,res) => {
         let data = {
+            req                         : req,
             kategoriProduk              : await m_master_produk_kategori.getSemua(),
             Produk_diKeranjang          : await m_trans_keranjang.getJumlahProduk_diKeranjang(req),
             produkJual                  : await m_master_produk.getSemua(),
@@ -26,6 +27,7 @@ module.exports =
 
     hal_index_produk: async (req,res) => {
         let data = {
+            req                     : req,
             kategoriProduk          : await m_master_produk_kategori.getSemua(),
             Produk_diKeranjang      : await m_trans_keranjang.getJumlahProduk_diKeranjang(req),
             produkJual              : await m_master_produk.getSemua(),
@@ -39,6 +41,7 @@ module.exports =
 
     hal_form_tambah: async (req,res) => {
         let data = {
+            req                     : req,
             kategoriProduk          : await m_master_produk_kategori.getSemua(),
             Produk_diKeranjang      : await m_trans_keranjang.getJumlahProduk_diKeranjang(req),
             currentUser             : req.session.user ? req.session.user[0] : null,
@@ -111,6 +114,7 @@ module.exports =
     detail_produk: async (req,res) => {
         let id = req.params.id_produk
         let data = {
+            req                     : req,
             kategoriProduk          : await m_master_produk_kategori.getSemua(),
             Produk_diKeranjang      : await m_trans_keranjang.getJumlahProduk_diKeranjang(req),
             produkJual              : await m_master_produk.getSatu( id ),
@@ -135,6 +139,7 @@ module.exports =
 
     keranjang_list: async (req,res) => {
         let data = {
+            req                     : req,
             kategoriProduk          : await m_master_produk_kategori.getSemua(),
             Produk_diKeranjang      : await m_trans_keranjang.getJumlahProduk_diKeranjang(req),
             detailProduk_keranjang  : await m_trans_keranjang.getDetailProduk_diKeranjang(req),
