@@ -24,7 +24,8 @@ module.exports =
     user_register: (user) => {
         let sqlData = {
             email       : user.email,
-            password    : user.password
+            password    : user.password,
+            role_id     : user.role_id
         }
         return eksekusi(mysql.format(   
             `INSERT INTO user SET ?`,

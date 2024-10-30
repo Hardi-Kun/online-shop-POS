@@ -57,7 +57,7 @@ module.exports =
 
     form_daftar: (req,res) => {
         let dataview = {
-            message: req.query.msg
+            notifikasi: req.query.notif,
         }
         res.render('v_auth/form-daftar', dataview)
     },
@@ -81,14 +81,15 @@ module.exports =
         // Create a user object
         let user = {
             email       : form_email,
-            password    : hashedPassword
+            password    : hashedPassword,
+            role_id     : 2
         }
 
         try {
             // Use insert_user method from m_user model
             let insert = await m_user.user_register(user);
             if (insert.affectedRows > 0) {
-                res.redirect('/auth/login');
+                res.redirect('/auth/login?notif=Berhasil daftar');
             } else {
                 res.redirect('/auth/login?notif=Tidak bisa menambahkan akun, coba lagi.');
             }

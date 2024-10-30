@@ -4,6 +4,7 @@ const moment                   = require('moment')
 const bcrypt                   = require('bcryptjs')
 const m_master_produk_kategori = require('../model/m_master_produk_kategori')
 const m_trans_keranjang        = require('../model/m_trans_keranjang')
+const m_trans_pembelian        = require('../model/m_trans_pembelian')
 const m_user                   = require('../model/m_user')
 
 
@@ -11,13 +12,18 @@ module.exports =
 {
     index: async (req,res)  => {
         let dataview = {
-            req                 : req,
-            moment              : moment,
-            notifikasi          : req.query.notif,
-            currentUser         : req.session.user ? req.session.user[0] : null,
-            kategoriProduk      : await m_master_produk_kategori.getSemua(),
-            Produk_diKeranjang  : await m_trans_keranjang.getJumlahProduk_diKeranjang(req),
-            dataUser            : await m_user.getSemua(),
+            req                     : req,
+            moment                  : moment,
+            notifikasi              : req.query.notif,
+            currentUser             : req.session.user ? req.session.user[0] : null,
+            kategoriProduk          : await m_master_produk_kategori.getSemua(),
+            Produk_diKeranjang      : await m_trans_keranjang.getJumlahProduk_diKeranjang(req),
+            dataUser                : await m_user.getSemua(),
+            orderanMasuk            : await m_trans_pembelian.getJumlahOrderanMasuk(),
+            produk_diProses         : await m_trans_pembelian.getJumlahProduk_diProses(req),
+            detailProduk_diProses   : await m_trans_pembelian.getDetailProduk_diProses(req),
+            produk_diKirim          : await m_trans_pembelian.getJumlahProduk_diKirim(req),
+            detailProduk_diKirim    : await m_trans_pembelian.getDetailProduk_diKirim(req),
         }
         res.render('v_profil/index', dataview)
 

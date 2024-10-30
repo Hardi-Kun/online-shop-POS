@@ -21,6 +21,9 @@ module.exports =
             currentUser                 : req.session.user ? req.session.user[0] : null,
             produk_diProses             : await m_trans_pembelian.getJumlahProduk_diProses(req),
             detailProduk_diProses       : await m_trans_pembelian.getDetailProduk_diProses(req),
+            orderanMasuk                : await m_trans_pembelian.getJumlahOrderanMasuk(),
+            produk_diKirim              : await m_trans_pembelian.getJumlahProduk_diKirim(req),
+            detailProduk_diKirim        : await m_trans_pembelian.getDetailProduk_diKirim(req),
         }
         res.render('v_olshop/beranda', data)
     },
@@ -35,6 +38,9 @@ module.exports =
             currentUser             : req.session.user ? req.session.user[0] : null,
             produk_diProses         : await m_trans_pembelian.getJumlahProduk_diProses(req),
             detailProduk_diProses   : await m_trans_pembelian.getDetailProduk_diProses(req),
+            orderanMasuk            : await m_trans_pembelian.getJumlahOrderanMasuk(),
+            produk_diKirim          : await m_trans_pembelian.getJumlahProduk_diKirim(req),
+            detailProduk_diKirim    : await m_trans_pembelian.getDetailProduk_diKirim(req),
         }
         res.render('v_olshop/produk/index', data)
     },
@@ -47,6 +53,9 @@ module.exports =
             currentUser             : req.session.user ? req.session.user[0] : null,
             produk_diProses         : await m_trans_pembelian.getJumlahProduk_diProses(req),
             detailProduk_diProses   : await m_trans_pembelian.getDetailProduk_diProses(req),
+            orderanMasuk            : await m_trans_pembelian.getJumlahOrderanMasuk(),
+            produk_diKirim          : await m_trans_pembelian.getJumlahProduk_diKirim(req),
+            detailProduk_diKirim    : await m_trans_pembelian.getDetailProduk_diKirim(req),
         }
         res.render('v_olshop/produk/form-tambah', data)
     },
@@ -122,6 +131,9 @@ module.exports =
             moment                  : moment,
             currentUser             : req.session.user ? req.session.user[0] : null,
             detailProduk_diProses   : await m_trans_pembelian.getDetailProduk_diProses(req),
+            orderanMasuk            : await m_trans_pembelian.getJumlahOrderanMasuk(),
+            produk_diKirim          : await m_trans_pembelian.getJumlahProduk_diKirim(req),
+            detailProduk_diKirim    : await m_trans_pembelian.getDetailProduk_diKirim(req),
         }
         res.render('v_olshop/produk/detail', data) 
     },
@@ -149,6 +161,9 @@ module.exports =
             currentUser             : req.session.user ? req.session.user[0] : null,
             produk_diProses         : await m_trans_pembelian.getJumlahProduk_diProses(req),
             detailProduk_diProses   : await m_trans_pembelian.getDetailProduk_diProses(req),
+            orderanMasuk            : await m_trans_pembelian.getJumlahOrderanMasuk(),
+            produk_diKirim          : await m_trans_pembelian.getJumlahProduk_diKirim(req),
+            detailProduk_diKirim    : await m_trans_pembelian.getDetailProduk_diKirim(req),
         }
         res.render('v_olshop/keranjang/list', data)
     },
@@ -178,6 +193,43 @@ module.exports =
         } catch (error) {
             res.redirect(`/olshop?notif=${error.message}`)
         }
-    }
+    },
+
+    orderanMasuk_list: async function(req,res) {
+        let semuaCustomer_ygBeli = await m_trans_pembelian.getSemuaCustomer()
+        for (const i in semuaCustomer_ygBeli) {
+            let id_user = semuaCustomer_ygBeli[i].id_user
+            semuaCustomer_ygBeli[i].produk_yang_dibeli = await m_trans_pembelian.getSemuaProduk_byCustomer(id_user)
+        }
+        let data = {
+            req                     : req,
+            kategoriProduk          : await m_master_produk_kategori.getSemua(),
+            produk_diKeranjang      : await m_trans_keranjang.getJumlahProduk_diKeranjang(req),
+            detailProduk_keranjang  : await m_trans_keranjang.getDetailProduk_diKeranjang(req),
+            moment                  : moment,
+            notifikasi              : req.query.notif,
+            user_id_role            : req.session.user[0].role_id,
+            produk_diProses         : await m_trans_pembelian.getJumlahProduk_diProses(req),
+            detailProduk_diProses   : await m_trans_pembelian.getDetailProduk_diProses(req),
+            orderanMasuk            : await m_trans_pembelian.getJumlahOrderanMasuk(),
+            orderanMasuk_detail     : semuaCustomer_ygBeli,
+            currentUser             : req.session.user ? req.session.user[0] : null,
+            produk_diKirim          : await m_trans_pembelian.getJumlahProduk_diKirim(req),
+            detailProduk_diKirim    : await m_trans_pembelian.getDetailProduk_diKirim(req),
+        }
+        res.render('v_olshop/orderan-masuk/list', data)
+    },
+
+    orderanMasuk_prosesKirimBarang: async function(req,res) {
+        let id_customer = req.params.id_customer
+        try {
+            let update  = await m_trans_pembelian.updateDikirim_byIdCustomer(id_customer)
+            if (update.affectedRows > 0) {
+                res.redirect(`/olshop/orderan-masuk/list?notif=Berhasil kirim`)
+            }
+        } catch (error) {
+            res.redirect(`/olshop/orderan-masuk/list?notif=${error.message}`)
+        }
+    },
 
 }

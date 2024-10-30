@@ -63,6 +63,8 @@ app.get('/olshop/keranjang/list', cek_login, c_olshop.keranjang_list)
 app.post('/olshop/keranjang/hapus/:id_keranjang', cek_login, c_olshop.keranjang_hapus)
 app.post('/olshop/keranjang/bayar', cek_login, c_olshop.keranjang_bayar)
 
+app.get('/olshop/orderan-masuk/list', cek_login, c_olshop.orderanMasuk_list)
+app.post('/olshop/orderan-masuk/kirim-barang/:id_customer', cek_login, c_olshop.orderanMasuk_prosesKirimBarang)
 
 app.listen(port, ()=>{
     console.log(`Aplikasi sudah siap, buka http://localhost:${port}`)
