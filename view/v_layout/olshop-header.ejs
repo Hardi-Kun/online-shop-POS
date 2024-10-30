@@ -39,6 +39,35 @@
                                 <% } %> 
                             </a>
                         </li>
+                        <!-- baru -->
+                        <li class="nav-item mx-1">
+                            <div class="dropdown">
+                                <button class="nav-link position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-boxes-packing"></i>
+                                    <% if (produk_diProses[0].jumlah > 0) { %>
+                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            <%= produk_diProses[0].jumlah %>
+                                        </span>
+                                    <% } %>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <% for(let i in detailProduk_diProses) { %>
+                                            <div class="dropdown-item">
+                                                <table>
+                                                    <tr>
+                                                        <td><%= detailProduk_diProses[i].produk_nama %> (<%= detailProduk_diProses[i].qty %>)</td>
+                                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                        <td class="text-end">Rp <%= Number(detailProduk_diProses[i].harga).toLocaleString('id-ID') %></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        <% } %>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                         <!-- baru -->
                         <li class="nav-item mx-1">
                             <a href="/olshop/produk" class="nav-link">
                                 <i class="fa-solid fa-boxes-stacked me-1"></i> Produk Saya

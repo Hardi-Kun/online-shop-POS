@@ -18,26 +18,32 @@ module.exports =
             notifikasi                  : req.query.notif,
             produkExist_diKeranjang     : await m_trans_keranjang.cekProdukExist(req), 
             currentUser                 : req.session.user ? req.session.user[0] : null,
+            produk_diProses             : await m_trans_pembelian.getJumlahProduk_diProses(req),
+            detailProduk_diProses       : await m_trans_pembelian.getDetailProduk_diProses(req),
         }
         res.render('v_olshop/beranda', data)
     },
 
     hal_index_produk: async (req,res) => {
         let data = {
-            kategoriProduk      : await m_master_produk_kategori.getSemua(),
-            Produk_diKeranjang  : await m_trans_keranjang.getJumlahProduk_diKeranjang(req),
-            produkJual          : await m_master_produk.getSemua(),
-            notifikasi          : req.query.notif,
-            currentUser         : req.session.user ? req.session.user[0] : null,
+            kategoriProduk          : await m_master_produk_kategori.getSemua(),
+            Produk_diKeranjang      : await m_trans_keranjang.getJumlahProduk_diKeranjang(req),
+            produkJual              : await m_master_produk.getSemua(),
+            notifikasi              : req.query.notif,
+            currentUser             : req.session.user ? req.session.user[0] : null,
+            produk_diProses         : await m_trans_pembelian.getJumlahProduk_diProses(req),
+            detailProduk_diProses   : await m_trans_pembelian.getDetailProduk_diProses(req),
         }
         res.render('v_olshop/produk/index', data)
     },
 
     hal_form_tambah: async (req,res) => {
         let data = {
-            kategoriProduk      : await m_master_produk_kategori.getSemua(),
-            Produk_diKeranjang  : await m_trans_keranjang.getJumlahProduk_diKeranjang(req),
-            currentUser         : req.session.user ? req.session.user[0] : null,
+            kategoriProduk          : await m_master_produk_kategori.getSemua(),
+            Produk_diKeranjang      : await m_trans_keranjang.getJumlahProduk_diKeranjang(req),
+            currentUser             : req.session.user ? req.session.user[0] : null,
+            produk_diProses         : await m_trans_pembelian.getJumlahProduk_diProses(req),
+            detailProduk_diProses   : await m_trans_pembelian.getDetailProduk_diProses(req),
         }
         res.render('v_olshop/produk/form-tambah', data)
     },
@@ -105,11 +111,13 @@ module.exports =
     detail_produk: async (req,res) => {
         let id = req.params.id_produk
         let data = {
-            kategoriProduk      : await m_master_produk_kategori.getSemua(),
-            Produk_diKeranjang  : await m_trans_keranjang.getJumlahProduk_diKeranjang(req),
-            produkJual          : await m_master_produk.getSatu( id ),
-            moment              : moment,
-            currentUser         : req.session.user ? req.session.user[0] : null,
+            kategoriProduk          : await m_master_produk_kategori.getSemua(),
+            Produk_diKeranjang      : await m_trans_keranjang.getJumlahProduk_diKeranjang(req),
+            produkJual              : await m_master_produk.getSatu( id ),
+            produk_diProses         : await m_trans_pembelian.getJumlahProduk_diProses(req),
+            moment                  : moment,
+            currentUser             : req.session.user ? req.session.user[0] : null,
+            detailProduk_diProses   : await m_trans_pembelian.getDetailProduk_diProses(req),
         }
         res.render('v_olshop/produk/detail', data) 
     },
@@ -134,6 +142,8 @@ module.exports =
             notifikasi              : req.query.notif,
             user_id_role            : req.session.user[0].role_id,
             currentUser             : req.session.user ? req.session.user[0] : null,
+            produk_diProses         : await m_trans_pembelian.getJumlahProduk_diProses(req),
+            detailProduk_diProses   : await m_trans_pembelian.getDetailProduk_diProses(req),
         }
         res.render('v_olshop/keranjang/list', data)
     },
