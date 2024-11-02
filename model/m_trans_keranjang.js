@@ -68,4 +68,12 @@ module.exports =
         )
         return eksekusi( sqlSyntax )
     },
+
+    hapusProduk: (req) => {
+        let sqlSyntax = mysql.format(
+            `DELETE FROM trans_keranjang WHERE id = ?`,
+            [req.params.id_produk]
+        )
+        return eksekusi( sqlSyntax )
+    }
 }

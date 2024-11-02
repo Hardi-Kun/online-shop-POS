@@ -50,4 +50,38 @@ module.exports =
         )
         return eksekusi( sqlSyntax )
     },
+
+    hapusProduk: (id) => {
+        let sqlSyntax = mysql.format(
+            `DELETE FROM master_produk WHERE id = ?`,
+            [id]
+        )
+        return eksekusi (sqlSyntax)
+    },
+
+    update_produk:  function(req, id_produk, filename_foto1, filename_foto2, filename_foto3) {
+        let sqlData = {
+            nama            : req.body.form_nama,
+            harga           : req.body.form_harga,
+            stok            : req.body.form_stok,
+            kategori_id     : req.body.form_kategori,
+            foto1           : filename_foto1,
+            foto2           : filename_foto2,
+            foto3           : filename_foto3,
+            video           : req.body.form_video,
+            deskripsi       : req.body.form_deskripsi,
+            spesifikasi     : req.body.form_spesifikasi,
+            info_penting    : req.body.form_info_penting,
+            created_at      : moment().format('YYYY-MM-DD HH:mm:ss'),
+            created_by      : req.session.user[0].id,
+        }
+        let id = req.params.id_produk
+
+        let sqlSyntax = mysql.format(
+            `UPDATE master_produk SET ? WHERE id = ?`,
+            [sqlData, id]
+        )
+        return eksekusi( sqlSyntax)
+    }
+
 }

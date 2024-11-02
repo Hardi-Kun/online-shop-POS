@@ -82,7 +82,7 @@ module.exports =
             foto1.mv(folder1_simpan, async function(err) {
                 if (err) {  
                     pesan_upload += `<br>foto 1 gagal upload`
-                } else {x``
+                } else {
                     pesan_upload += `<br>foto 1 berhasil upload`
                 }
             })
@@ -232,4 +232,44 @@ module.exports =
         }
     },
 
+    produk_hapus: async (req,res) => {
+        try {
+            let hapus = await m_master_produk.hapusProduk( req.params.id )
+            if (hapus.affectedRows > 0) {
+                res.redirect('/olshop/produk?notif=Produk berhasil dihapus')
+            }
+        } catch (error) {
+            throw error
+        }
+    },
+
+    form_edit: async (req,res) => {
+        let id = req.params.id_produk
+        let data = {
+            req                     : req,
+            kategoriProduk          : await m_master_produk_kategori.getSemua(),
+            produkJual              : await m_master_produk.getSatu( id ),
+            Produk_diKeranjang      : await m_trans_keranjang.getJumlahProduk_diKeranjang(req),
+            currentUser             : req.session.user ? req.session.user[0] : null,
+            produk_diProses         : await m_trans_pembelian.getJumlahProduk_diProses(req),
+            detailProduk_diProses   : await m_trans_pembelian.getDetailProduk_diProses(req),
+            orderanMasuk            : await m_trans_pembelian.getJumlahOrderanMasuk(),
+            produk_diKirim          : await m_trans_pembelian.getJumlahProduk_diKirim(req),
+            detailProduk_diKirim    : await m_trans_pembelian.getDetailProduk_diKirim(req),
+        }
+        res.render('v_olshop/produk/edit-produk', data)
+    },
+
+    proses_edit: async (req, res) => {
+        try {
+            let update = await m_master_produk.update_produk(req)
+            if (update.affectedRows > 0 ) {
+                res.redirect('/olshop/produk?notif=Produk berhasil diedit')
+            }
+        } catch (error) {
+            throw error
+        }
+    }
+
 }
+
